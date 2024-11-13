@@ -35,7 +35,8 @@ setup(
         'Operating System :: OS Independent'
     ],
     install_requires=[
-        'numpy>=1.18.0',
+        'numpy>=1.17.4',
+        'matplotlib>=3.1.2',
     ],
     extras_require={
         'dev': ['twine==5.1.1'],
