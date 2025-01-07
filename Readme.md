@@ -64,6 +64,13 @@ Total distance: 65
 ox.plot_tsp_route(best_route, node_names, node_coordinates, start_node, cycle)
 ```
 
+The `solve_knapsack` function can be used to solve the **Knapsack problem**.
+
+```python
+best_combination, max_val = ox.solve_knapsack(weights, values, capacity, "dynamic_programming")
+print(f"Best combination: {best_combination}, max value: {max_val}")
+```
+
 ## License
 
 OptimX is licensed under the MIT License. See [LICENSE](Licence.md) for more details.

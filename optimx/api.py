@@ -1,8 +1,9 @@
 import numpy as np
 from numpy import ndarray
-from typing import List, Union, Optional, Literal
+from typing import List, Union, Optional, Literal, Iterable
 from .tsp.solver import TspSolver
 from .tsp.visual import plot_tsp_route_matplot
+from .knapsack.solver import KnapsackSolver
 from .utils import generate_node_coordinates
 
 
@@ -114,3 +115,25 @@ def plot_tsp_route(route: List[Union[str, int]],
     plot_tsp_route_matplot(route, node_names, node_coordinates, start_node, cycle)
 
     return
+
+def solve_knapsack(weights: Iterable[float], 
+                   values: Iterable[float], 
+                   capacity: float, 
+                   algorithm: Literal["brute", "greedy", "dynamic_programming"] = "dynamic_programming"
+                   ) -> List[int]:
+    if not isinstance(weights, list):
+        raise ValueError("weights must be a list")
+    
+    if not isinstance(values, list):
+        raise ValueError("values must be a list")
+    
+    if not isinstance(capacity, (int, float)):
+        raise ValueError("capacity must be an integer or float")
+    
+    if not isinstance(algorithm, str):
+        raise ValueError("algorithm must be a string")
+    
+    solver = KnapsackSolver()
+    best_combination, max_value = solver.solve_problem(weights, values, capacity, algorithm)
+    
+    return best_combination, max_value
