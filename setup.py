@@ -7,7 +7,7 @@ with open("Readme.md", "r") as f:
 
 setup(
     name="optimx",
-    version="0.0.3",
+    version="0.0.4",
     description="An optimization package for solving classic problems like TSP using various algorithms",
     packages=find_packages(),
     long_description=long_description,

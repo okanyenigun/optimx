@@ -1,3 +1,9 @@
+## [0.0.4] | 31.01.2025
+
+### Fixed
+
+- The `__init__.py` file was missing in the `ant` module and has now been added.
+
 ## [0.0.3] | 31.01.2025
 
 ### Added
