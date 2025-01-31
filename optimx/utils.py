@@ -15,3 +15,15 @@ def generate_node_coordinates(num_nodes: int, node_names: List[str]) -> dict:
     """Generates coordinates for nodes in a circular layout."""
     angle = 2 * np.pi / num_nodes
     return {node_names[i]: (np.cos(i * angle), np.sin(i * angle)) for i in range(num_nodes)}
+
+def generate_square_distances(n_cities: int) -> ndarray:
+    """Generates random distances between cities."""
+    if n_cities < 2:
+        raise ValueError("n_cities must be greater than 1")
+    if not isinstance(n_cities, int):
+        raise ValueError("n_cities must be an integer")
+    
+    distances = np.random.randint(1, 100, size=(n_cities, n_cities))
+    distances = (distances + distances.T) / 2
+    np.fill_diagonal(distances, 0)
+    return distances

@@ -1,18 +1,20 @@
 import numpy as np
 from numpy import ndarray
-from typing import List, Union, Optional, Literal, Iterable
+from typing import List, Union, Optional, Literal, Iterable, Tuple
 from .tsp.solver import TspSolver
 from .tsp.visual import plot_tsp_route_matplot
 from .knapsack.solver import KnapsackSolver
+from .ant.solver import AntColonyOptimization
 from .utils import generate_node_coordinates
 
 
-def solve_tsp(distance_matrix: Union[List, ndarray],
-              algorithm: Literal["brute", "nearest_neighbour", "dynamic_programming", "branch_and_bound"] = "dynamic_programming",
-              node_names: Optional[List[str]] = None,
-              start_node: Optional[Union[int, str]] = None,
-              cycle: bool = False
-              ) -> List[Union[int, str]]:
+def solve_tsp(
+        distance_matrix: Union[List, ndarray],
+        algorithm: Literal["brute", "nearest_neighbour", "dynamic_programming", "branch_and_bound"] = "dynamic_programming",
+        node_names: Optional[List[str]] = None,
+        start_node: Optional[Union[int, str]] = None,
+        cycle: bool = False
+        ) -> List[Union[int, str]]:
     
     if not isinstance(distance_matrix, (list, ndarray)):
         raise ValueError("distance_matrix must be a list or numpy array")
@@ -56,10 +58,12 @@ def solve_tsp(distance_matrix: Union[List, ndarray],
     return best_route
 
 
-def calculate_tsp_distance_by_route(route: List, 
-                                    distance_matrix: Union[List, ndarray],
-                                    node_names: Optional[List[str]]=None
-                                    ) -> float:
+def calculate_tsp_distance_by_route(
+        route: List, 
+        distance_matrix: Union[List, ndarray],
+        node_names: Optional[List[str]]=None
+        ) -> float:
+    
     if node_names:
         indexes = [node_names.index(node) for node in route]
     else:
@@ -71,11 +75,13 @@ def calculate_tsp_distance_by_route(route: List,
     return total_distance
 
 
-def plot_tsp_route(route: List[Union[str, int]], 
-                   node_names: Optional[List[str]] = None,
-                   node_coordinates: Optional[dict] = None,
-                   start_node: Optional[Union[int, str]] = None,
-                   cycle: bool = True) -> None:
+def plot_tsp_route(
+        route: List[Union[str, int]], 
+        node_names: Optional[List[str]] = None,
+        node_coordinates: Optional[dict] = None,
+        start_node: Optional[Union[int, str]] = None,
+        cycle: bool = True
+        ) -> None:
     
     if cycle:
         route = route[:-1]
@@ -116,11 +122,13 @@ def plot_tsp_route(route: List[Union[str, int]],
 
     return
 
-def solve_knapsack(weights: Iterable[float], 
-                   values: Iterable[float], 
-                   capacity: float, 
-                   algorithm: Literal["brute", "greedy", "dynamic_programming"] = "dynamic_programming"
-                   ) -> List[int]:
+def solve_knapsack(
+        weights: Iterable[float], 
+        values: Iterable[float], 
+        capacity: float, 
+        algorithm: Literal["brute", "greedy", "dynamic_programming"] = "dynamic_programming"
+        ) -> List[int]:
+    
     if not isinstance(weights, list):
         raise ValueError("weights must be a list")
     
@@ -137,3 +145,30 @@ def solve_knapsack(weights: Iterable[float],
     best_combination, max_value = solver.solve_problem(weights, values, capacity, algorithm)
     
     return best_combination, max_value
+
+
+def solve_ant_colony(
+        distances: ndarray, 
+        n_ants: int, 
+        n_best: int, 
+        n_iterations: int, 
+        decay: float, 
+        alpha: float=1, 
+        beta: float=1, 
+        Q: float=1
+        ) -> List[Tuple[int, int]]:
+    
+    if not isinstance(distances, np.ndarray):
+        raise TypeError("distances must be a NumPy array.")
+    if distances.shape[0] != distances.shape[1]:
+        raise ValueError("Distance matrix must be square.")
+    if np.any(distances < 0):
+        raise ValueError("Distances cannot be negative.")
+    if not (0 < decay <= 1):
+        raise ValueError("Decay must be in the range (0, 1].")
+    if any(param <= 0 for param in [n_ants, n_best, n_iterations]):
+        raise ValueError("n_ants, n_best, and n_iterations must be positive integers.")
+    
+    solver = AntColonyOptimization(distances, n_ants, n_best, n_iterations, decay, alpha, beta, Q)
+    shortest_path = solver.solve_problem()
+    return shortest_path

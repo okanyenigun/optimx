@@ -71,6 +71,22 @@ best_combination, max_val = ox.solve_knapsack(weights, values, capacity, "dynami
 print(f"Best combination: {best_combination}, max value: {max_val}")
 ```
 
+The `solve_ant_colony` function can be used to solve the **Any Colony Optimization problem**.
+
+```python
+from optimx.utils import generate_square_distances
+
+distances = generate_square_distances(10)
+
+n_ants = 10
+n_best = 2
+n_iteration = 100
+decay = 0.6
+
+shortest_paths = ox.solve_ant_colony(distances, n_ants, n_best, n_iteration, decay)
+print("Shortest paths:", shortest_paths)
+```
+
 ## License
 
 OptimX is licensed under the MIT License. See [LICENSE](Licence.md) for more details.

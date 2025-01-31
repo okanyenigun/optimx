@@ -1,3 +1,9 @@
+## [0.0.3] | 31.01.2025
+
+### Added
+
+- Any Colony Optimization has been added (`solve_ant_colony` function in the API).
+
 ## [0.0.2] | 07.01.2025
 
 ### Added
