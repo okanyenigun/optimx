@@ -10,7 +10,7 @@ from .shortest_path.factory import ShortestPathFactory
 
 def solve_tsp(
         distance_matrix: Union[List, ndarray],
-        algorithm: Literal["brute", "nearest_neighbour",
+        algorithm: Literal["brute", "nearest_neighbor",
                            "dynamic_programming", "branch_and_bound"] = "dynamic_programming",
         node_names: Optional[List[str]] = None,
         start_node: Optional[Union[int, str]] = None,
@@ -21,7 +21,7 @@ def solve_tsp(
 
     Args:
         distance_matrix (Union[List, ndarray]): A square matrix representing the distances between nodes.
-        algorithm (Literal[brute, nearest_neighbour, dynamic_programming, branch_and_bound], optional): The algorithm to use.
+        algorithm (Literal[brute, nearest_neighbor, dynamic_programming, branch_and_bound], optional): The algorithm to use.
         node_names (Optional[List[str]], optional): The names of the nodes. Defaults to None.
         start_node (Optional[Union[int, str]], optional): The starting node. Defaults to None. If None, the first node is used.
         cycle (bool, optional): Whether to return to the starting node. Defaults to False.
